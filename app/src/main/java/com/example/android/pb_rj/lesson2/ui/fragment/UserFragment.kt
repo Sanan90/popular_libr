@@ -8,8 +8,12 @@ import com.example.android.pb_rj.databinding.FragmentUserBinding
 import com.example.android.pb_rj.databinding.FragmentUsersBinding
 import com.example.android.pb_rj.lesson2.mvp.model.entity.GithubUser
 import com.example.android.pb_rj.lesson2.mvp.presenter.UserPresenter
+import com.example.android.pb_rj.lesson2.mvp.repo.UserRepository
+import com.example.android.pb_rj.lesson2.mvp.repo.UserRepositoryFactory
 import com.example.android.pb_rj.lesson2.mvp.view.UserView
 import com.example.android.pb_rj.lesson2.ui.App
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -20,7 +24,7 @@ class UserFragment(user: GithubUser) : MvpAppCompatFragment(), UserView {
     }
 
     private val presenter by moxyPresenter {
-        UserPresenter(user, App.instance.router)
+        UserPresenter(user.login, userRepository = UserRepositoryFactory.create(), AndroidSchedulers.mainThread(), App.instance.router)
     }
 
     private var vb: FragmentUserBinding? = null
@@ -40,8 +44,12 @@ class UserFragment(user: GithubUser) : MvpAppCompatFragment(), UserView {
     }
 
 
-    override fun showChooseUser(login: String) {
-        vb?.userName?.text = login
+    override fun showChooseUser(user: GithubUser) {
+        vb?.userName?.text = user.login
+    }
+
+    override fun showError(error: String) {
+
     }
 
 
