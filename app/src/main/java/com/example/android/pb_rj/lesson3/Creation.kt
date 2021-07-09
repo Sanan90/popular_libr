@@ -18,7 +18,7 @@ class Creation {
      * всё это будет запускаться и выводить результат.
      * */
     class Producer {
-        fun myJust() : Observable<String> {
+        fun observable() : Observable<String> {
             return Observable.just("1", "2")
         }
     }
@@ -47,13 +47,13 @@ class Creation {
         }
 
         //Тут мы с помощью Observer подписываемся на Observable,
-        // возвращаемый функцией just() нашего Producer.
-        fun execJust() {
-            producer.myJust().subscribe(stringObserver)
+        // возвращаемый функцией observale() нашего Producer.
+        fun execObservable() {
+            producer.observable().subscribe(stringObserver)
         }
 
         fun exec() {
-            execJust()
+            execObservable()
         }
     }
 }
